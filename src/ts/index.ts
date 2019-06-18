@@ -34,19 +34,19 @@ import './events/listeners/resizeListener'
 
 // noprod
 // @ts-ignore
-window.THREE = THREE
+// window.THREE = THREE
 // @ts-ignore
-window.g = g
+// window.g = g
 // @ts-ignore
-window.cubeRotation = cubeRotation
+// window.cubeRotation = cubeRotation
 
 
 window.addEventListener('cuberotation', (event: import('./events/CubeRotationEvent').CubeRotationEvent) => {
 	// debugger
-	console.log('foo')
-	console.log(event.cube)
-	console.log(event.fixedAxle)
-	console.log(event.factor)
+	console.log('Rotation')
+	// console.log(event.cube)
+	// console.log(event.fixedAxle)
+	// console.log(event.factor)
 	cubeRotation.rotate(event.cube, event.fixedAxle, event.factor)
 })
 
@@ -58,6 +58,7 @@ g.renderer.setSize(window.innerWidth, window.innerHeight)
 g.controls.noRoll = true
 g.controls.noPan = true
 g.controls.dynamicDampingFactor = 0.5
+g.controls.noZoom = true // temp. while I'm trying to figure out how to deal with passive listeners
 
 g.scene.background = new THREE.Color('rgb(72, 58, 96)')
 g.scene.add(cubesGroup)

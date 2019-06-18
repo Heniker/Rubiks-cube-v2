@@ -71,7 +71,7 @@ const dragOn = debounce((event) => {
 
 	raycaster.setFromCamera(pointer, camera)
 	const intersection = raycaster.intersectObject(plane)[0]
-	console.log(intersection)
+	// console.log(intersection)
 	// debugger
 
 	if (!intersection) {
