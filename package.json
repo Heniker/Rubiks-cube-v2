@@ -1,0 +1,22 @@
+{
+  "name": "rubiks-cube-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lightness": "^1.0.0",
+    "p-waterfall": "^2.1.0",
+    "three": "^0.105.2"
+  },
+  "devDependencies": {
+    "ts-loader": "^6.0.3",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.2",
+    "webpack": "^4.34.0"
+  }
+}
