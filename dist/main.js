@@ -50967,7 +50967,7 @@ const dragOn = debounce_1.debounce((event) => {
     }
     globals_1.raycaster.setFromCamera(globals_1.pointer, globals_1.camera);
     const intersection = globals_1.raycaster.intersectObject(plane)[0];
-    console.log(intersection);
+    // console.log(intersection)
     // debugger
     if (!intersection) {
         // #Redo>
@@ -51173,17 +51173,17 @@ __webpack_require__(/*! ./events/listeners/pointerListener */ "./src/ts/events/l
 __webpack_require__(/*! ./events/listeners/resizeListener */ "./src/ts/events/listeners/resizeListener.ts");
 // noprod
 // @ts-ignore
-window.THREE = init_1.THREE;
+// window.THREE = THREE
 // @ts-ignore
-window.g = g;
+// window.g = g
 // @ts-ignore
-window.cubeRotation = runtime_1.cubeRotation;
+// window.cubeRotation = cubeRotation
 window.addEventListener('cuberotation', (event) => {
     // debugger
-    console.log('foo');
-    console.log(event.cube);
-    console.log(event.fixedAxle);
-    console.log(event.factor);
+    console.log('Rotation');
+    // console.log(event.cube)
+    // console.log(event.fixedAxle)
+    // console.log(event.factor)
     runtime_1.cubeRotation.rotate(event.cube, event.fixedAxle, event.factor);
 });
 g.renderer.setPixelRatio(window.devicePixelRatio);
@@ -51191,6 +51191,7 @@ g.renderer.setSize(window.innerWidth, window.innerHeight);
 g.controls.noRoll = true;
 g.controls.noPan = true;
 g.controls.dynamicDampingFactor = 0.5;
+g.controls.noZoom = true; // temp. while I'm trying to figure out how to deal with passive listeners
 g.scene.background = new init_1.THREE.Color('rgb(72, 58, 96)');
 g.scene.add(runtime_1.cubesGroup);
 runtime_1.colors.apply(['#BAB3AB' /* grey */, 'red', 'blue', '#FF8900' /*orange*/, 'green', 'yellow'], 'black');
