@@ -1,10 +1,10 @@
-import {intersects} from '../../globals'
-import DragOnCubeEvent from '../DragOnCubeEvent'
+import {DragOnCubeEvent} from '../DragOnCubeEvent'
 
 
 window.addEventListener('cubedragstart', () => {
+
 	function pointerMoveEvent() {
-		window.dispatchEvent(new DragOnCubeEvent('cubedragon', intersects[0]))
+		window.dispatchEvent(new DragOnCubeEvent('cubedragon'))
 	}
 
 	window.addEventListener('pointermove', pointerMoveEvent)

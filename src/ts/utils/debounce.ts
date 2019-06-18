@@ -12,4 +12,4 @@ function debounce(callback: (...args: any[]) => void, delay: number) {
 	}
 }
 
-export default debounce
+export {debounce}

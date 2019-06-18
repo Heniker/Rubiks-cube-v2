@@ -1,9 +1,14 @@
-import {intersects} from '../../globals'
-import DragOnCubeEvent from '../DragOnCubeEvent'
+import { intersects } from '../../globals'
+import {DragOnCubeEvent} from '../DragOnCubeEvent'
 
 
-window.addEventListener('pointerdown', () => {
+
+window.addEventListener('pointerdown', (event) => {
+	if (event.button !== 2) {
+		return
+	}
+
 	if (intersects.length) {
-		window.dispatchEvent(new DragOnCubeEvent('cubedragstart', intersects[0]))
+		window.dispatchEvent(new DragOnCubeEvent('cubedragstart'))
 	}
 })

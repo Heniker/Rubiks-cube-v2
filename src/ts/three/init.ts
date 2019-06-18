@@ -4,10 +4,11 @@ import OrthographicTrackballControls from './OrthographicTrackballControls'
 type ThreeType = typeof THREE
 
 
-interface Three_ extends ThreeType {
+interface newTHREE extends ThreeType {
 	OrthographicTrackballControls: any
 }
 
-(THREE as Three_).OrthographicTrackballControls = OrthographicTrackballControls
+const betterThree = THREE as newTHREE
+betterThree.OrthographicTrackballControls = OrthographicTrackballControls
 
-export default THREE as Three_
+export {betterThree as THREE}

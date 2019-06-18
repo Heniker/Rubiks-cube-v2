@@ -1,11 +1,8 @@
-import { isMobile } from 'is-mobile'
-import THREE from './three/init'
-
+import {THREE} from './three/init'
 
 type Intersection = import('three').Intersection
 
 
-const mobile = isMobile()
 // array of functions that will be executed during render loop
 const animationTasks: Array<() => void> = []
 const raycaster = new THREE.Raycaster()
@@ -17,23 +14,18 @@ const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerH
 const controls = new THREE.OrthographicTrackballControls(camera)
 const scene = new THREE.Scene()
 const intersects: Intersection[] = []
+
+// this values can be edited, but reload is required for changes
+// to take effect:
 const rotationDebounceTimer = 50
 
-
+// this values can be edited at runtime:
 const mutable = {
-	modifierButtonActive: false,
-	pointerRotationThreshold: 10,
-}
-
-const runtime = {
-	cubeLight: null,
-	cubeRotation: null,
-	cubesGroup: null,
+	pointerRotationThreshold: 5,
 }
 
 
 export {
-	mobile,
 	animationTasks,
 	raycaster,
 	pointer,
@@ -46,5 +38,4 @@ export {
 	rotationDebounceTimer,
 
 	mutable,
-	runtime,
 }

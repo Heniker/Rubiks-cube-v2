@@ -6,6 +6,7 @@
 	"jsRules": {},
 	"rules": {
 		"interface-name": false,
+		"no-console": false,
 		"semicolon": {
 			"options": [
 				"never"
@@ -42,9 +43,6 @@
 				"allow-leading-underscore",
 				"allow-trailing-underscore"
 			]
-		},
-		"no-console": {
-			"options": [""]
 		}
 	},
 	"rulesDirectory": []

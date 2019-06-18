@@ -12,5 +12,6 @@ class CubeRotationEvent extends Event {
 	}
 }
 
-export default CubeRotationEvent
+export {CubeRotationEvent}
+
 
