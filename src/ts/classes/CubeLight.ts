@@ -1,12 +1,11 @@
 import * as lightness from 'lightness'
-import {intersects} from '../globals'
-import {Toggle} from './Toggle'
+import { intersects } from '../globals'
+import { Toggle } from './Toggle'
 
 
 type Geometry = import('three').Geometry
 type Face = import('three').Face3
 type Cube = import('three').Mesh
-
 
 
 class CubeLight extends Toggle {
@@ -20,7 +19,6 @@ class CubeLight extends Toggle {
 		super()
 		super.setTask(this.renderTask.bind(this))
 	}
-
 
 
 	private getSideFaces(intersection: THREE.Intersection): [Face, Face] {
@@ -117,4 +115,4 @@ class CubeLight extends Toggle {
 
 
 
-export {CubeLight}
+export { CubeLight }

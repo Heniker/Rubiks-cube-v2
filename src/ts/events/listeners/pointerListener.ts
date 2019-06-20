@@ -1,7 +1,6 @@
 import { canvas, pointer } from '../../globals'
 
 
-
 void (() => {
 	// pointer position
 
@@ -13,5 +12,4 @@ void (() => {
 
 	canvas.addEventListener('pointermove', updatePointerPosition)
 	canvas.addEventListener('pointerdown', updatePointerPosition)
-
 })()

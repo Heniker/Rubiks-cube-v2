@@ -50478,9 +50478,9 @@ function LensFlare() {
 
 /***/ }),
 
-/***/ "./src/ts/Classes/Colors.ts":
+/***/ "./src/ts/classes/Colors.ts":
 /*!**********************************!*\
-  !*** ./src/ts/Classes/Colors.ts ***!
+  !*** ./src/ts/classes/Colors.ts ***!
   \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -50529,9 +50529,9 @@ exports.Colors = Colors;
 
 /***/ }),
 
-/***/ "./src/ts/Classes/CubeLight.ts":
+/***/ "./src/ts/classes/CubeLight.ts":
 /*!*************************************!*\
-  !*** ./src/ts/Classes/CubeLight.ts ***!
+  !*** ./src/ts/classes/CubeLight.ts ***!
   \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -50541,7 +50541,7 @@ exports.Colors = Colors;
 Object.defineProperty(exports, "__esModule", { value: true });
 const lightness = __webpack_require__(/*! lightness */ "./node_modules/lightness/index.js");
 const globals_1 = __webpack_require__(/*! ../globals */ "./src/ts/globals.ts");
-const Toggle_1 = __webpack_require__(/*! ./Toggle */ "./src/ts/Classes/Toggle.ts");
+const Toggle_1 = __webpack_require__(/*! ./Toggle */ "./src/ts/classes/Toggle.ts");
 class CubeLight extends Toggle_1.Toggle {
     constructor() {
         super();
@@ -50620,9 +50620,9 @@ exports.CubeLight = CubeLight;
 
 /***/ }),
 
-/***/ "./src/ts/Classes/CubeRotation.ts":
+/***/ "./src/ts/classes/CubeRotation.ts":
 /*!****************************************!*\
-  !*** ./src/ts/Classes/CubeRotation.ts ***!
+  !*** ./src/ts/classes/CubeRotation.ts ***!
   \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -50632,7 +50632,7 @@ exports.CubeLight = CubeLight;
 Object.defineProperty(exports, "__esModule", { value: true });
 const globals_1 = __webpack_require__(/*! ../globals */ "./src/ts/globals.ts");
 const init_1 = __webpack_require__(/*! ../three/init */ "./src/ts/three/init.ts");
-const Toggle_1 = __webpack_require__(/*! ./Toggle */ "./src/ts/Classes/Toggle.ts");
+const Toggle_1 = __webpack_require__(/*! ./Toggle */ "./src/ts/classes/Toggle.ts");
 class CubeRotation extends Toggle_1.Toggle {
     constructor(rubiksCube) {
         super();
@@ -50687,9 +50687,9 @@ exports.CubeRotation = CubeRotation;
 
 /***/ }),
 
-/***/ "./src/ts/Classes/RubiksCube.ts":
+/***/ "./src/ts/classes/RubiksCube.ts":
 /*!**************************************!*\
-  !*** ./src/ts/Classes/RubiksCube.ts ***!
+  !*** ./src/ts/classes/RubiksCube.ts ***!
   \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -50737,9 +50737,9 @@ exports.RubiksCube = RubiksCube;
 
 /***/ }),
 
-/***/ "./src/ts/Classes/Toggle.ts":
+/***/ "./src/ts/classes/Toggle.ts":
 /*!**********************************!*\
-  !*** ./src/ts/Classes/Toggle.ts ***!
+  !*** ./src/ts/classes/Toggle.ts ***!
   \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -50926,7 +50926,7 @@ let wantRotation = false;
 let savedCube = null;
 const savedPos = new THREE.Vector3();
 let savedPosMaxAxle = null;
-let subed = new THREE.Vector3();
+const subed = new THREE.Vector3();
 let subedMaxAxle = null;
 let plane = null;
 function dragStart(event) {
@@ -50973,14 +50973,14 @@ const dragOn = debounce_1.debounce((event) => {
         // #Redo>
         throw new Error('No intersection with planes');
     }
-    subed = intersection.point.sub(savedPos);
+    subed.copy(intersection.point.sub(savedPos));
     subedMaxAxle = getMaxVecAxle_1.getMaxVecAxle(subed);
     if (Math.abs(subed[subedMaxAxle]) >= globals_1.mutable.pointerRotationThreshold) {
         globals_1.scene.remove(plane);
         wantRotation = false;
         window.dispatchEvent(new CubeRotationEvent_1.CubeRotationEvent({
-            // #Typecasting>
             cube: savedCube,
+            // #Typecasting>
             ...getFixedAxleAndFactor(),
         }));
     }
@@ -51125,7 +51125,8 @@ const intersects = [];
 exports.intersects = intersects;
 // this values can be edited, but reload is required for changes
 // to take effect:
-const rotationDebounceTimer = 50;
+// tslint:disable-next-line
+let rotationDebounceTimer = 50;
 exports.rotationDebounceTimer = rotationDebounceTimer;
 // this values can be edited at runtime:
 const mutable = {
@@ -51171,21 +51172,7 @@ __webpack_require__(/*! ./events/dispatchers/cubeDragStartDispatcher */ "./src/t
 __webpack_require__(/*! ./events/dispatchers/cubeRotationDispatcher */ "./src/ts/events/dispatchers/cubeRotationDispatcher.ts");
 __webpack_require__(/*! ./events/listeners/pointerListener */ "./src/ts/events/listeners/pointerListener.ts");
 __webpack_require__(/*! ./events/listeners/resizeListener */ "./src/ts/events/listeners/resizeListener.ts");
-// noprod
-// @ts-ignore
-// window.THREE = THREE
-// @ts-ignore
-// window.g = g
-// @ts-ignore
-// window.cubeRotation = cubeRotation
-window.addEventListener('cuberotation', (event) => {
-    // debugger
-    console.log('Rotation');
-    // console.log(event.cube)
-    // console.log(event.fixedAxle)
-    // console.log(event.factor)
-    runtime_1.cubeRotation.rotate(event.cube, event.fixedAxle, event.factor);
-});
+/* >Setup< */
 g.renderer.setPixelRatio(window.devicePixelRatio);
 g.renderer.setSize(window.innerWidth, window.innerHeight);
 g.controls.noRoll = true;
@@ -51194,13 +51181,18 @@ g.controls.dynamicDampingFactor = 0.5;
 g.controls.noZoom = true; // temp. while I'm trying to figure out how to deal with passive listeners
 g.scene.background = new init_1.THREE.Color('rgb(72, 58, 96)');
 g.scene.add(runtime_1.cubesGroup);
+// #FixMe>
+// Adjusting camera position according to screen coordinates.
+g.camera.position.z = Math.sqrt((Math.min(window.innerWidth, window.innerHeight) / 100) / 2) *
+    Math.abs(runtime_1.cubesGroup.children[0].position.z) * 4;
 runtime_1.colors.apply(['#BAB3AB' /* grey */, 'red', 'blue', '#FF8900' /*orange*/, 'green', 'yellow'], 'black');
 runtime_1.cubeLight.enable();
 runtime_1.cubeRotation.enable();
-// #FixMe>
-// Adjusting camera position.
-g.camera.position.z = Math.sqrt((Math.min(window.innerWidth, window.innerHeight) / 100) / 2) *
-    Math.abs(runtime_1.cubesGroup.children[0].position.z) * 4;
+/* <Setup> */
+window.addEventListener('cuberotation', (event) => {
+    console.log('Rotation');
+    runtime_1.cubeRotation.rotate(event.cube, event.fixedAxle, event.factor);
+});
 animate();
 function animate() {
     requestAnimationFrame(animate);
@@ -51226,10 +51218,10 @@ function animate() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Colors_1 = __webpack_require__(/*! ./Classes/Colors */ "./src/ts/Classes/Colors.ts");
-const CubeLight_1 = __webpack_require__(/*! ./Classes/CubeLight */ "./src/ts/Classes/CubeLight.ts");
-const CubeRotation_1 = __webpack_require__(/*! ./Classes/CubeRotation */ "./src/ts/Classes/CubeRotation.ts");
-const RubiksCube_1 = __webpack_require__(/*! ./Classes/RubiksCube */ "./src/ts/Classes/RubiksCube.ts");
+const Colors_1 = __webpack_require__(/*! ./classes/Colors */ "./src/ts/classes/Colors.ts");
+const CubeLight_1 = __webpack_require__(/*! ./classes/CubeLight */ "./src/ts/classes/CubeLight.ts");
+const CubeRotation_1 = __webpack_require__(/*! ./classes/CubeRotation */ "./src/ts/classes/CubeRotation.ts");
+const RubiksCube_1 = __webpack_require__(/*! ./classes/RubiksCube */ "./src/ts/classes/RubiksCube.ts");
 const cubesGroup = new RubiksCube_1.RubiksCube(3, 10, 1);
 exports.cubesGroup = cubesGroup;
 const cubeLight = new CubeLight_1.CubeLight();
@@ -51649,6 +51641,8 @@ exports.default = OrthographicTrackballControls;
 
 "use strict";
 
+// This module only required because THREE library doesnt provide
+// OrthographicTrackballControls, so have to attach it manualy
 Object.defineProperty(exports, "__esModule", { value: true });
 const THREE = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 const OrthographicTrackballControls_1 = __webpack_require__(/*! ./OrthographicTrackballControls */ "./src/ts/three/OrthographicTrackballControls.ts");

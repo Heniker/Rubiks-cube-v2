@@ -1,4 +1,4 @@
-import {DragOnCubeEvent} from '../DragOnCubeEvent'
+import { DragOnCubeEvent } from '../DragOnCubeEvent'
 
 
 window.addEventListener('cubedragstart', () => {

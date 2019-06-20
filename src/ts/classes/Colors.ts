@@ -1,7 +1,6 @@
 import { Singleton } from '../utils/Singleton'
 
 
-
 class Colors extends Singleton {
 
 	cubesArr: THREE.Mesh[]
@@ -12,7 +11,6 @@ class Colors extends Singleton {
 		// #Typecasting>
 		this.cubesArr = (cubes.children as THREE.Mesh[])
 	}
-
 
 
 	apply(colors: string[], defaultColor: string) {
@@ -59,4 +57,4 @@ class Colors extends Singleton {
 	}
 }
 
-export {Colors}
+export { Colors }

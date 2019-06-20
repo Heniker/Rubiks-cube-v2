@@ -1,9 +1,7 @@
 // tslint:disable
 
-
 // Edited to transform to module
 // #!Warning> - This module doesnt have TS types
-
 
 
 import * as THREE from 'three'

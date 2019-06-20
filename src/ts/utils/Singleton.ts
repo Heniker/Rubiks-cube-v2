@@ -19,6 +19,5 @@ abstract class Singleton {
 	}
 }
 
-export {Singleton}
 
-
+export { Singleton }

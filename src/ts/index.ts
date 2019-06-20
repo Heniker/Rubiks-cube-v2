@@ -16,6 +16,7 @@ Rotation event should be fired
 Controls zoom is not working atm because of Passive event listeners
 */
 
+
 import * as waterfall from 'p-waterfall'
 
 import * as g from './globals'
@@ -31,27 +32,7 @@ import './events/listeners/pointerListener'
 import './events/listeners/resizeListener'
 
 
-
-// noprod
-// @ts-ignore
-// window.THREE = THREE
-// @ts-ignore
-// window.g = g
-// @ts-ignore
-// window.cubeRotation = cubeRotation
-
-
-window.addEventListener('cuberotation', (event: import('./events/CubeRotationEvent').CubeRotationEvent) => {
-	// debugger
-	console.log('Rotation')
-	// console.log(event.cube)
-	// console.log(event.fixedAxle)
-	// console.log(event.factor)
-	cubeRotation.rotate(event.cube, event.fixedAxle, event.factor)
-})
-
-
-
+/* >Setup< */
 g.renderer.setPixelRatio(window.devicePixelRatio)
 g.renderer.setSize(window.innerWidth, window.innerHeight)
 
@@ -63,17 +44,23 @@ g.controls.noZoom = true // temp. while I'm trying to figure out how to deal wit
 g.scene.background = new THREE.Color('rgb(72, 58, 96)')
 g.scene.add(cubesGroup)
 
+// #FixMe>
+// Adjusting camera position according to screen coordinates.
+g.camera.position.z = Math.sqrt((Math.min(window.innerWidth, window.innerHeight) / 100) / 2) *
+	Math.abs(cubesGroup.children[0].position.z) * 4
+
 colors.apply(
 	['#BAB3AB' /* grey */, 'red', 'blue', '#FF8900' /*orange*/, 'green', 'yellow'], 'black')
 cubeLight.enable()
 cubeRotation.enable()
+/* <Setup> */
 
 
-// #FixMe>
-// Adjusting camera position.
-g.camera.position.z = Math.sqrt((Math.min(window.innerWidth, window.innerHeight) / 100) / 2) *
-	Math.abs(cubesGroup.children[0].position.z) * 4
+window.addEventListener('cuberotation', (event: import('./events/CubeRotationEvent').CubeRotationEvent) => {
+	console.log('Rotation')
 
+	cubeRotation.rotate(event.cube, event.fixedAxle, event.factor)
+})
 
 
 animate()

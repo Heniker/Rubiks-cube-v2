@@ -1,6 +1,5 @@
 import { animationTasks } from '../globals'
-import {Singleton} from '../utils/Singleton'
-
+import { Singleton } from '../utils/Singleton'
 
 
 /**
@@ -9,7 +8,6 @@ import {Singleton} from '../utils/Singleton'
 abstract class Toggle extends Singleton {
 
 	protected isEnabled = false
-
 	private task: () => void
 
 
@@ -57,4 +55,4 @@ abstract class Toggle extends Singleton {
 	}
 }
 
-export {Toggle}
+export { Toggle }

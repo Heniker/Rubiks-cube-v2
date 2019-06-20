@@ -1,7 +1,6 @@
 import * as g from '../../globals'
 
 
-
 void (() => {
 	function onWindowResize() {
 

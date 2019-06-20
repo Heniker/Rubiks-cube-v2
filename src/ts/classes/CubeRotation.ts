@@ -3,7 +3,6 @@ import { THREE } from '../three/init'
 import { Toggle } from './Toggle'
 
 
-
 class CubeRotation extends Toggle {
 
 	step = 5 // animation 'speed'. 90 should be divisible by it
@@ -24,7 +23,6 @@ class CubeRotation extends Toggle {
 
 		this.cubeGroup = rubiksCube
 	}
-
 
 
 	rotate(cube: THREE.Mesh, fixedAxle_: string, factor_: 1 | -1) {

@@ -3,7 +3,7 @@ class CubeRotationEvent extends Event {
 	fixedAxle: string = null
 	factor: 1 | -1
 
-	constructor(props: {cube: THREE.Mesh, fixedAxle: string, factor: 1 | -1}) {
+	constructor(props: { cube: THREE.Mesh, fixedAxle: string, factor: 1 | -1 }) {
 		super('cuberotation')
 
 		this.cube = props.cube
@@ -12,6 +12,6 @@ class CubeRotationEvent extends Event {
 	}
 }
 
-export {CubeRotationEvent}
+export { CubeRotationEvent }
 
 

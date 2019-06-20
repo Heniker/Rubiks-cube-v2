@@ -14,7 +14,7 @@
 		},
 		"no-consecutive-blank-lines": {
 			"options": [
-				3
+				2
 			]
 		},
 		"member-access": {

@@ -5,4 +5,4 @@ class DragOnCubeEvent extends Event {
 	}
 }
 
-export {DragOnCubeEvent}
+export { DragOnCubeEvent }

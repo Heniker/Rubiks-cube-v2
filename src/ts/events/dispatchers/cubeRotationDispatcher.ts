@@ -7,15 +7,13 @@ import { getMaxVecAxle } from '../../utils/getMaxVecAxle'
 import { CubeRotationEvent } from '../CubeRotationEvent'
 
 
-
 let wantRotation = false
 let savedCube: THREE.Mesh = null
 const savedPos = new THREE.Vector3()
 let savedPosMaxAxle: string = null
-let subed = new THREE.Vector3()
+const subed = new THREE.Vector3()
 let subedMaxAxle: string = null
 let plane: THREE.Mesh = null
-
 
 
 function dragStart(event) {
@@ -80,7 +78,7 @@ const dragOn = debounce((event) => {
 	}
 
 
-	subed = intersection.point.sub(savedPos)
+	subed.copy(intersection.point.sub(savedPos))
 	subedMaxAxle = getMaxVecAxle(subed)
 
 
@@ -89,20 +87,18 @@ const dragOn = debounce((event) => {
 		wantRotation = false
 
 		window.dispatchEvent(new CubeRotationEvent({
-			// #Typecasting>
 			cube: (savedCube as THREE.Mesh),
-			...getFixedAxleAndFactor() as {factor: 1 | -1, fixedAxle: string},
+			// #Typecasting>
+			...getFixedAxleAndFactor() as { factor: 1 | -1, fixedAxle: string },
 		}))
 	}
 
 }, rotationDebounceTimer)
 
 
-
 window.addEventListener('cubedragstart', dragStart)
 window.addEventListener('cubedragon', dragOn)
 window.addEventListener('cubedragend', dragEnd)
-
 
 
 function getFixedAxleAndFactor() {

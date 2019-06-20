@@ -3,4 +3,5 @@ function getMaxVecAxle(vec: THREE.Vector3) {
 	return ['x', 'y', 'z'][absed.indexOf(Math.max(...absed))]
 }
 
-export {getMaxVecAxle}
+
+export { getMaxVecAxle }

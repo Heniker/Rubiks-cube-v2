@@ -6,10 +6,11 @@ function debounce(callback: (...args: any[]) => void, delay: number) {
 
 		callback.apply(this, args)
 
-		timer = setTimeout( () => {
+		timer = setTimeout(() => {
 			timer = null
 		}, delay)
 	}
 }
 
-export {debounce}
+
+export { debounce }

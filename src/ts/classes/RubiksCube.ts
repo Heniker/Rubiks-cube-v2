@@ -1,4 +1,4 @@
-import {THREE} from '../three/init'
+import { THREE } from '../three/init'
 
 
 // cube creation
@@ -49,7 +49,6 @@ class RubiksCube extends THREE.Group {
 	}
 
 
-
 	private addCube(positionVec: THREE.Vector3) {
 		const cube = new THREE.Mesh(this.geometry.clone(), this.material)
 		cube.position.copy(positionVec)
@@ -58,5 +57,4 @@ class RubiksCube extends THREE.Group {
 }
 
 
-
-export {RubiksCube}
+export { RubiksCube }
