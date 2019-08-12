@@ -51111,11 +51111,14 @@ exports.raycaster = raycaster;
 // mouse or finger position in normalized screen coordinates
 const pointer = new init_1.THREE.Vector2();
 exports.pointer = pointer;
-const renderer = new init_1.THREE.WebGLRenderer({ antialias: true });
+// seems like powerPreference doesn't change much atm
+const renderer = new init_1.THREE.WebGLRenderer({ canvas: document.querySelector('canvas'),
+    antialias: true, powerPreference: 'low-power' });
 exports.renderer = renderer;
-const canvas = window.document.body.appendChild(renderer.domElement);
+renderer.setSize(450, 320);
+const canvas = document.querySelector('canvas');
 exports.canvas = canvas;
-const camera = new init_1.THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
+const camera = new init_1.THREE.PerspectiveCamera(70, 450 / 320, 1, 1000);
 exports.camera = camera;
 const controls = new init_1.THREE.OrthographicTrackballControls(camera);
 exports.controls = controls;
@@ -51162,6 +51165,10 @@ Rotation event should be fired
 #!BUG>
 Controls zoom is not working atm because of Passive event listeners
 */
+/*
+#!Todo>
+Fix resize listener
+*/
 const waterfall = __webpack_require__(/*! p-waterfall */ "./node_modules/p-waterfall/index.js");
 const g = __webpack_require__(/*! ./globals */ "./src/ts/globals.ts");
 const runtime_1 = __webpack_require__(/*! ./runtime */ "./src/ts/runtime.ts");
@@ -51172,6 +51179,12 @@ __webpack_require__(/*! ./events/dispatchers/cubeDragStartDispatcher */ "./src/t
 __webpack_require__(/*! ./events/dispatchers/cubeRotationDispatcher */ "./src/ts/events/dispatchers/cubeRotationDispatcher.ts");
 __webpack_require__(/*! ./events/listeners/pointerListener */ "./src/ts/events/listeners/pointerListener.ts");
 __webpack_require__(/*! ./events/listeners/resizeListener */ "./src/ts/events/listeners/resizeListener.ts");
+/* >Debug< */
+// @ts-ignore
+window.g = g;
+// @ts-ignore
+window.THREE = init_1.THREE;
+/* <Debug> */
 /* >Setup< */
 g.renderer.setPixelRatio(window.devicePixelRatio);
 g.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -51179,7 +51192,8 @@ g.controls.noRoll = true;
 g.controls.noPan = true;
 g.controls.dynamicDampingFactor = 0.5;
 g.controls.noZoom = true; // temp. while I'm trying to figure out how to deal with passive listeners
-g.scene.background = new init_1.THREE.Color('rgb(72, 58, 96)');
+g.controls.enabled = false;
+g.scene.background = new init_1.THREE.Color('#282828');
 g.scene.add(runtime_1.cubesGroup);
 // #FixMe>
 // Adjusting camera position according to screen coordinates.
@@ -51193,9 +51207,17 @@ window.addEventListener('cuberotation', (event) => {
     console.log('Rotation');
     runtime_1.cubeRotation.rotate(event.cube, event.fixedAxle, event.factor);
 });
+let pos = g.camera.position;
+let theta = 0;
+pos.x = 0;
+pos.z = 0;
 animate();
 function animate() {
     requestAnimationFrame(animate);
+    pos.x = Math.cos(theta) * 55;
+    pos.z = Math.sin(theta) * 55;
+    theta += 0.01;
+    // g.camera.position.z = Math.cos(g.camera.position.x)
     g.renderer.render(g.scene, g.camera);
     g.controls.update();
     g.camera.lookAt(0, 0, 0);

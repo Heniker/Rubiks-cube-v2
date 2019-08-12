@@ -7,23 +7,340 @@
 
 	<title>Rubik's cube</title>
 
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap">
+	<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+	<script async src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"
+		integrity="sha384-7Gk1S6elg570RSJJxILsRiq8o0CO99g1zjfOISrqjFUCjxHDn3TmaWoWOqt6eswF"
+		crossorigin="anonymous"></script>
+
+
 	<style>
+		/* Fonts look like shit tbh. */
+
+		:root {
+			--content-height: 400px;
+			--content-width: 450px;
+			/* amount of containers in a row */
+			--container-row: 2;
+
+			--header-height: calc(var(--content-height) / 5);
+			--header-width: var(--content-width);
+			--container-height: calc(var(--content-height) - var(--header-height));
+			--container-width: var(--content-width);
+			--roundabout-width: calc(var(--content-width) * var(--container-row));
+		}
+
+		* {
+			overflow: hidden;
+		}
+
 		body {
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 100%;
 			margin: 0;
 			padding: 0;
 			overscroll-behavior: none;
+			background-color: #282828;
+
+			/* font-family: 'Lato', sans-serif; */
 		}
 
 		canvas {
-			width: 100%;
+			display: block;
+			position: absolute;
+			margin: auto;
+			width: var(--content-width) !important;
+			height: var(--content-height) !important;
+			z-index: -1;
+		}
+
+		h1 {
+			margin: auto;
+			font-family: 'Roboto Slab', serif;
+			color: rgb(167, 167, 167);
+			user-select: none;
+		}
+
+		#content {
+			display: block;
+			position: absolute;
+			margin: auto;
+			/* It looks more centered this way */
+			top: calc(var(--header-height)/2*-1);
+			bottom: 0;
+			right: 0;
+			left: 0;
+			width: var(--content-width);
+			height: var(--content-height);
+			border: 2px solid gray;
+			border-radius: 10px;
+		}
+
+		#header {
+			display: flex;
+			width: inherit;
+			height: var(--header-height);
+			background-color: rgb(30, 30, 30);
+			/* opacity: 0.8; */
+			border-bottom: 1px solid gray;
+		}
+
+		#menu-button {
+			display: flex;
+			position: absolute;
+			align-self: center;
+			right: 0;
+			margin-right: 10px;
+			transition: transform 0.6s;
+			cursor: pointer;
+		}
+
+		#menu-button>.icon {
+			font-size: 50px;
+			width: 50px;
+			height: 50px;
+		}
+
+		#menu-button:hover {
+			fill: #eaa758;
+			color: #eaa758;
+			/* fill: #ce760e; */
+		}
+
+		#menu {
+			position: absolute;
+			right: 0;
+			width: 0px;
+			height: var(--container-height);
+			transition: width 0.6s;
+		}
+
+		#menu-contents {
+			width: var(--roundabout-width);
+			height: var(--container-height);
+			white-space: nowrap;
+		}
+
+		.container {
+			width: var(--container-width);
+			height: var(--container-height);
+			display: inline-flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+			padding: 0;
+			margin: 0;
+			list-style-type: none;
+		}
+
+		.container>li {
+			background-color: rgba(0, 0, 0, 0.65);
+			padding: 0 20px;
+			user-select: none;
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			position: relative;
 			height: 100%;
 			display: flex;
+			align-items: center;
+			color: lightgray;
+			font-weight: bold;
+			font-size: 2rem;
+			transition: background-color 0.5s;
+			cursor: pointer;
+		}
+
+		.container>li:first-child {
+			border-top: none;
+		}
+
+		.container>li:hover {
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.container>li:hover::after {
+			content: ' ';
+			width: 10px;
+		}
+
+		.container>li>.icon {
+			margin-left: auto;
+		}
+
+		.container-group1 {
+			display: none
 		}
 	</style>
 </head>
 
 <body>
-	<script src="main.js"></script>
+	<div id="content">
+		<div id="header">
+
+			<div id="menu-button" data-event-click="toggle: #container-main">
+				<i class="icon fas fa-cog"></i>
+			</div>
+
+			<h1>
+				Rubik's Cube
+			</h1>
+		</div>
+
+		<canvas></canvas>
+
+		<div id="menu" data-current-element="none">
+			<div id="menu-contents">
+				<ul class="container container-group0" id="container-main">
+
+					<li data-event-click="open: #container-1">
+						<div>
+							First
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+					<li data-event-click="open: #container-2">
+						<div>
+							Second
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+					<li data-event-click="open: #container-3">
+						<div>
+							Controls type
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+				</ul>
+
+
+				<ul class="container container-group1" id="container-1">
+
+					<li>
+						<div>
+							1-1
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+					<li>
+						<div>
+							1-2
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+					<li>
+						<div>
+							1-3
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+				</ul>
+
+
+				<ul class="container container-group1" id="container-2">
+
+					<li>
+						<div>
+							2-1
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+					<li>
+						<div>
+							2-2
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+					<li>
+						<div>
+							2-3
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+				</ul>
+
+
+				<ul class="container container-group1" id="container-3">
+
+					<li>
+						<div>
+							3-1
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+					<li>
+						<div>
+							3-2
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+					<li>
+						<div>
+							3-3
+						</div>
+						<i class="icon fas fa-caret-right"></i>
+					</li>
+
+				</ul>
+
+			</div>
+		</div>
+
+
+		<script>
+
+			const menu = document.querySelector('#menu')
+			const baseWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--content-width'))
+
+			function slide(isOnward = true) {
+				const amount = isOnward ? baseWidth : -baseWidth
+				menu.style.width = parseInt(getComputedStyle(menu).width) + amount + 'px'
+			}
+
+			const slideOnward = slide.bind(null, true)
+			const slideBackward = slide.bind(null, false)
+
+
+			document.addEventListener('click', (e) => {
+				const elem = e.target.closest('[data-event-click]')
+
+				if (elem === null) {
+					return
+				}
+
+				const selector = /#.*/.exec(elem.dataset.eventClick)
+
+				if (selector === '#container-main') {
+					if (menu.dataset.currentElement === '#container-main') {
+						menu.dataset.currentElement = 'none'
+						slideBackward()
+					}
+
+					else {
+						slideOnward()
+						menu.dataset.currentElement = '#container-main'
+					}
+				}
+
+				else {
+					document.querySelector(selector).style.display = 'inline-flex'
+					slide(true)
+				}
+
+			})
+		</script>
+
+		<!-- <script src="main.js" async="true"></script> -->
 </body>
 
 </html>

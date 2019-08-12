@@ -16,6 +16,11 @@ Rotation event should be fired
 Controls zoom is not working atm because of Passive event listeners
 */
 
+/*
+#!Todo>
+Fix resize listener
+*/
+
 
 import * as waterfall from 'p-waterfall'
 
@@ -32,6 +37,13 @@ import './events/listeners/pointerListener'
 import './events/listeners/resizeListener'
 
 
+/* >Debug< */
+// @ts-ignore
+window.g = g
+// @ts-ignore
+window.THREE = THREE
+/* <Debug> */
+
 /* >Setup< */
 g.renderer.setPixelRatio(window.devicePixelRatio)
 g.renderer.setSize(window.innerWidth, window.innerHeight)
@@ -40,14 +52,16 @@ g.controls.noRoll = true
 g.controls.noPan = true
 g.controls.dynamicDampingFactor = 0.5
 g.controls.noZoom = true // temp. while I'm trying to figure out how to deal with passive listeners
+g.controls.enabled = false
 
-g.scene.background = new THREE.Color('rgb(72, 58, 96)')
+g.scene.background = new THREE.Color('#282828')
 g.scene.add(cubesGroup)
 
 // #FixMe>
 // Adjusting camera position according to screen coordinates.
 g.camera.position.z = Math.sqrt((Math.min(window.innerWidth, window.innerHeight) / 100) / 2) *
 	Math.abs(cubesGroup.children[0].position.z) * 4
+
 
 colors.apply(
 	['#BAB3AB' /* grey */, 'red', 'blue', '#FF8900' /*orange*/, 'green', 'yellow'], 'black')
@@ -63,11 +77,22 @@ window.addEventListener('cuberotation', (event: import('./events/CubeRotationEve
 })
 
 
+let pos = g.camera.position
+let theta = 0
+pos.x = 0
+pos.z = 0
+
+
 animate()
+
 
 function animate() {
 	requestAnimationFrame(animate)
 
+	pos.x = Math.cos(theta) * 55
+	pos.z = Math.sin(theta) * 55
+	theta += 0.01
+	// g.camera.position.z = Math.cos(g.camera.position.x)
 	g.renderer.render(g.scene, g.camera)
 	g.controls.update()
 	g.camera.lookAt(0, 0, 0)
