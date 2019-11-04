@@ -3,3 +3,5 @@ jsconfig.json
 tslint.json
 .eslintrc.json
 .vscode
+dist/main.js
+dist/main.js.map

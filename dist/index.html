@@ -170,14 +170,33 @@
 		.container-group1 {
 			display: none
 		}
+
+		#menu-back-button>.icon {
+			font-size: 40px;
+			width: 40px;
+			height: 40px;
+		}
+
+		#menu-back-button {
+			display: flex;
+			position: absolute;
+			align-self: center;
+			/* right: 0; */
+			margin-left: 10px;
+			transition: transform 0.6s;
+			cursor: pointer;
+			visibility: hidden;
+		}
 	</style>
 </head>
 
 <body>
 	<div id="content">
 		<div id="header">
-
-			<div id="menu-button" data-event-click="toggle: #container-main">
+			<div id="menu-back-button">
+				<i class="icon fas fa-arrow-left"></i>
+			</div>
+			<div id="menu-button">
 				<i class="icon fas fa-cog"></i>
 			</div>
 
@@ -192,21 +211,21 @@
 			<div id="menu-contents">
 				<ul class="container container-group0" id="container-main">
 
-					<li data-event-click="open: #container-1">
+					<li data-event-click="open #container-1">
 						<div>
 							First
 						</div>
 						<i class="icon fas fa-caret-right"></i>
 					</li>
 
-					<li data-event-click="open: #container-2">
+					<li data-event-click="open #container-2">
 						<div>
 							Second
 						</div>
 						<i class="icon fas fa-caret-right"></i>
 					</li>
 
-					<li data-event-click="open: #container-3">
+					<li data-event-click="open #container-3">
 						<div>
 							Controls type
 						</div>
@@ -300,15 +319,34 @@
 		<script>
 
 			const menu = document.querySelector('#menu')
+			const menuButton = document.querySelector('#menu-button')
+			const menuBackButton = document.querySelector('#menu-back-button')
 			const baseWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--content-width'))
 
-			function slide(isOnward = true) {
+			const slide = (isOnward = true) => {
 				const amount = isOnward ? baseWidth : -baseWidth
 				menu.style.width = parseInt(getComputedStyle(menu).width) + amount + 'px'
 			}
 
 			const slideOnward = slide.bind(null, true)
 			const slideBackward = slide.bind(null, false)
+
+			const toggleMenu = (() => {
+				let width = null
+
+				return () => {
+					if (width === 0) {
+						menu.style.width = width + 'px'
+						menuButton.style.transform = `rotate('180deg')`
+					} else {
+						menuButton.style.transform = `rotate('0')`
+						width = parseInt(window.getComputedStyle(menu).width)
+						menu.style.width = 0
+					}
+				}
+			})()
+
+			menuButton.addEventListener('click', toggleMenu)
 
 
 			document.addEventListener('click', (e) => {
@@ -318,24 +356,7 @@
 					return
 				}
 
-				const selector = /#.*/.exec(elem.dataset.eventClick)
-
-				if (selector === '#container-main') {
-					if (menu.dataset.currentElement === '#container-main') {
-						menu.dataset.currentElement = 'none'
-						slideBackward()
-					}
-
-					else {
-						slideOnward()
-						menu.dataset.currentElement = '#container-main'
-					}
-				}
-
-				else {
-					document.querySelector(selector).style.display = 'inline-flex'
-					slide(true)
-				}
+				const [action, selector] = elem.dataset.eventClick.split(' ')
 
 			})
 		</script>
