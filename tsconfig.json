@@ -1,12 +1,15 @@
 {
-	"compilerOptions": {
-		"sourceMap": true,
+  "compilerOptions": {
+    "sourceMap": true,
 
-		"module": "commonjs",
-		"target": "esnext",
-		"allowJs": true
-	},
-	"exclude": [
-		"node_modules",
-	]
+    "module": "commonjs",
+    "target": "esnext",
+    "allowJs": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@globals": ["src/globals.ts"]
+    }
+  },
+  "exclude": ["node_modules"]
 }

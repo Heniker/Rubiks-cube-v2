@@ -1,0 +1,44 @@
+{
+	"defaultSeverity": "error",
+	"extends": [
+		"tslint:recommended"
+	],
+	"jsRules": {},
+	"rules": {
+		"interface-name": false,
+		"no-console": false,
+		"semicolon": {
+			"options": [
+				"never"
+			]
+		},
+		"member-access": {
+			"options": [
+				"no-public"
+			]
+		},
+		"indent": {
+			"options": [
+				"tabs"
+			]
+		},
+		"one-line": {
+			"options": [
+				"check-whitespace",
+				"check-open-brace"
+			]
+		},
+		"quotemark": {
+			"options": [
+				"single"
+			]
+		},
+		"variable-name": {
+			"options": [
+				"allow-leading-underscore",
+				"allow-trailing-underscore"
+			]
+		}
+	},
+	"rulesDirectory": []
+}

@@ -1,3 +1,4 @@
+// @ts-nocheck
 // tslint:disable
 
 // Edited to transform to module
