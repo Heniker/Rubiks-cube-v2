@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, argv) => {
   const mode = argv.mode || 'development';
@@ -21,9 +21,11 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
-      new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'public/index.html'),
-      }),
+      new CopyPlugin([
+        {
+          from: 'public/index.html',
+        },
+      ]),
     ],
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
