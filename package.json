@@ -12,7 +12,7 @@
   "dependencies": {
     "lightness": "^1.0.0",
     "p-waterfall": "^2.1.0",
-    "three": "^0.105.2"
+    "three": "^0.125.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.1.1",
